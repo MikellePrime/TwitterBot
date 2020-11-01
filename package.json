@@ -1,0 +1,22 @@
+{
+  "name": "twitterbot",
+  "version": "1.0.0",
+  "description": "Our Bot's name is Alan Cain (@Gargame55196808) and he is a music producer.",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MikellePrime/TwitterBot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MikellePrime/TwitterBot/issues"
+  },
+  "homepage": "https://github.com/MikellePrime/TwitterBot#readme",
+  "dependencies": {
+    "twit": "^2.2.11"
+  }
+}

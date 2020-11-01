@@ -1,5 +1,5 @@
 /**
- * @author Austin Lindquist & Malachi Locke-Primus 
+ * @author Austin Lindquist & Malachi Locke-Primus
  */
 
 
@@ -46,18 +46,61 @@ function retweetLatest() {
 	  }
 	});
 }
-// function tweet() {
-//	T.post('statuses/update', { }, function(error, response) {})}
-// function retweetArtist() {}
-/*
-function like() {
-	T.get('search/')
-}*/
-// function postPhoto() {}
-// function commentLatest() {}
 
-// Try to retweet something as soon as we run the program...
+// The hashtag of the tweet(s) the bot will like and reply to
+hashtags = ["#PharrellWilliams", "#Maroon5", "#JustinBieber", "#Coldplay", "#RedHotChiliPeppers"]
+var ranHash = hashtags[Math.floor(Math.random() * hashtags.length)];
+var postSearch = {q: ranHash, count: 2, result_type: "mixed"};
+
+// This function finds a tweet and likes and replies to it
+function like() {
+	T.get('search/tweets', postSearch, function (error, data) {
+		// log out any errors and responses
+		console.log(error, data);
+  	    // Likes the post if the search (or the actual liking) doesn't have an error
+		// likeId is the id of the like and commented post
+		if (!error) {
+			var likeId = data.statuses[0].id_str;
+			T.post('favorites/create', {id: likeId}, function(error, response) {
+				console.log(response);
+				if (error) {
+					console.log("something wrong here :(")
+					console.log(error);
+				} else {
+					console.log("all good...check the bot, it liked something!");
+				}
+			// Here is where the function adds a comment
+			var handle = data.statuses[0].user.screen_name;
+			var name = data.statuses[0].user.name;
+			var congratsMessages = [" this is amazing!👏👏👏", " wow!", " really cool!"];
+			var ranMess = congratsMessages[Math.floor(Math.random() * congratsMessages.length)];
+			var replyMessage = "@" + handle + ranMess;
+			T.post('statuses/update', {in_reply_to_status_id: likeId, status: replyMessage}, function (error, response) {
+				console.log(response);
+				if (error) {
+					console.log("something wrong here :(")
+					console.log(error);
+				} else {
+					console.log("Success! The bot just added a comment!");
+				}
+
+			})
+		})
+	 } else {
+		  console.log("There was an error with the hashtag search: ", error);
+
+	 }
+    });
+}
+
+
+// This function allows the bot to post periodically themed content
+
+// Calling functions as soon as we run the program...
 retweetLatest();
+like();
 // ...and then every hour after that. Time here is in milliseconds, so
 // 1000 ms = 1 second, 1 sec * 60 = 1 min, 1 min * 60 = 1 hour --> 1000 * 60 * 60
 setInterval(retweetLatest, 1000 * 60 * 60);
+// the bot is set to like a #music post every 45minutes...same conversion as above
+setInterval(like, 1000 * 60 * 45);
