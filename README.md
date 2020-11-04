@@ -6,4 +6,6 @@ Feel free to update the projects tab with any tasks to complete.
 
 Our bot can currently:
 * Retweet posts under certain hastags
-* Like and reply to posts with a positive message
+* Retweet posts under certain @mentions
+* Like and reply to posts with a positive message and maybe an "interactive comment."
+* Tweets out updates on Alan's "projects."
